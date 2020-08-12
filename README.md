@@ -3,7 +3,7 @@ ___
 
 ![](assets/fall-over.gif)
 
-A python wrapper for gym environments created using the JavaScript [genesis-tubs](https://github.com/mauicv/genesis-tubs-engine) physics engine.
+A python wrapper for reinforcement learning gym environments created using the [genesis-tubs](https://github.com/mauicv/genesis-tubs-engine) JavaScript physics engine.
 
 **Note**: _This repo is under development_
 ___
