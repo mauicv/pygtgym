@@ -38,5 +38,4 @@ ___
 
 ## TODO:
 
-- [ ] close subprocess correctly on errors
-- [ ] handle electron close on error
+- [x] close nodejs subprocess correctly on errors

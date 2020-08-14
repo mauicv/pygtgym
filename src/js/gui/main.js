@@ -11,17 +11,13 @@ function createWindow () {
   })
   win.loadFile('index.html')
   win.webContents.openDevTools()
-  connectSocket()
+  win.webContents.on('did-finish-load', () => connectSocket(win))
 }
 
-function connectSocket(){
+function connectSocket(win){
   var socket = new WebSocket('ws://localhost:4444')
-  socket.onopen = function(e) {
-    socket.send("ready");
-  };
-
   socket.on('message', (msg)=>{
-    console.log(msg)
+    win.webContents.send('msg', msg)
   })
 }
 

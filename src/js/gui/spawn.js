@@ -5,7 +5,9 @@ const http = require('http');
 function _buildSocketConnect(ws) {
   var guiSocket = {
     ws: ws,
-    send: (msg) => ws.send(msg)
+    send: (msg) => {
+      ws.send(JSON.stringify(msg))
+    }
   }
   return guiSocket
 }

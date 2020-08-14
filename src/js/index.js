@@ -18,6 +18,7 @@ var gui = {
         gui.guiSocketConnected = true
         gui.guiSocketPending = false
         gui.guiSocket = guiSocket
+        gui.sendCache()
       })
     }
   },
@@ -27,15 +28,16 @@ var gui = {
            !gui.guiSocketPending
   },
   pending: () => gui.guiSocketPending,
+  sendCache: () => {
+    for (let i=0; i<gui.cache.length; i++) {
+      let stepImg = gui.cache.shift()
+      gui.guiSocket.send(stepImg)
+    }
+  },
   send: (data) => {
+    gui.cache.push(data)
     if (gui.connected()) {
-      gui.cache.push(data)
-      for (var i=0; i++; i<gui.cache.length) {
-        let stepImg = gui.cache.shift()
-        gui.guiSocket.send(stepImg)
-      }
-    } else if (gui.pending()) {
-      gui.cache.push(data)
+      gui.sendCache()
     }
   }
 }
@@ -57,7 +59,7 @@ var state = {
     return state.env.step(actions)
   },
   render: (_) => {
-    var data = state.env._getImage()
+    var data = state.env.getImage()
     state.gui.setup()
     state.gui.send(data)
     return {'outcome': 'success'}

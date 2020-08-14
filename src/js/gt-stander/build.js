@@ -114,7 +114,7 @@ class Env {
     return [avgX/4, avgY/4]
   }
 
-  _getImage(){
+  getImage(){
     return this.environment.constraints
       .filter(c=>c.visable)
       .map(c=>{
