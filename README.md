@@ -1,12 +1,16 @@
 ## pygtgym
+
 ___
+
 
 ![](assets/fall-over.gif)
 
 A python wrapper for reinforcement learning gym environments created using the [genesis-tubs](https://github.com/mauicv/genesis-tubs-engine) JavaScript physics engine.
 
 **Note**: _This repo is under development_
+
 ___
+
 
 ## setup
 
@@ -20,6 +24,7 @@ npm install
 
 ___
 
+
 ## tests
 
 With virtual environment active.
@@ -27,3 +32,11 @@ With virtual environment active.
 ```sh
 python tests/setup.py
 ```
+
+___
+
+
+## TODO:
+
+- [ ] close subprocess correctly on errors
+- [ ] handle electron close on error

@@ -114,6 +114,23 @@ class Env {
     return [avgX/4, avgY/4]
   }
 
+  _getImage(){
+    return this.environment.constraints
+      .filter(c=>c.visable)
+      .map(c=>{
+        return [
+          [
+            c.from.x[0],
+            c.from.x[1]
+          ],
+          [
+            c.to.x[0],
+            c.to.x[1]
+          ]
+        ]
+      })
+  }
+
 }
 
 module.exports = { Env }

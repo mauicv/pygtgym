@@ -1,5 +1,6 @@
 var engine = require('genesis-tubs-engine')
 var GtStander = require('./gt-stander/build.js')
+var { spawnRenderProcess } = require('./gui/spawn.js')
 
 const ENVS = {
   'gt-stander': () => new GtStander.Env(),
@@ -8,6 +9,7 @@ const ENVS = {
 
 var state = {
   env: undefined,
+  guiSocket: undefined,
   make: (envName) => {
     this.env = ENVS[envName]()
     return {
@@ -21,6 +23,18 @@ var state = {
   step: (actions) => {
     return this.env.step(actions)
   },
+  render: (_) => {
+    var data = this.env._getImage()
+    if (!this.guiSocket) {
+      spawnRenderProcess().then((guiSocket)=>{
+        this.guiSocket = guiSocket
+        this.guiSocket.send(data)
+      })
+    } else {
+      this.guiSocket.send(data)
+    }
+
+  }
 }
 
 process.stdin.setEncoding('utf-8')
@@ -33,7 +47,6 @@ process.stdin.on('readable', () => {
     process.stdout.write(prepareResp(response))
   }
 })
-
 
 function prepareResp(data){
   dataJSON = JSON.stringify(data)

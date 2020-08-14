@@ -36,3 +36,9 @@ class Env:
 
     def step(self, action):
         return self._call('step', action)
+
+    def render(self):
+        return self._call('render', None)
+
+    def close(self):
+        self.ps.terminate()
