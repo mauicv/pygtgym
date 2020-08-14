@@ -7,13 +7,11 @@ from src import make # noqa
 
 def test_gui():
     env = make('gt-stander')
-    try:
-        env.reset()
-        for i in range(1000):
-            _, _, d, _ = env.step(list(range(6)))
-            env.render()
-    except Exception:
-        env.close()
+    env.reset()
+    for i in range(1000):
+        _, _, d, _ = env.step(list(range(6)))
+        env.render()
+    env.close()
     assert d
 
 

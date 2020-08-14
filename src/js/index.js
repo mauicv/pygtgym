@@ -4,36 +4,63 @@ var { spawnRenderProcess } = require('./gui/spawn.js')
 
 const ENVS = {
   'gt-stander': () => new GtStander.Env(),
+}
 
+var gui = {
+  guiSocket: undefined,
+  guiSocketConnected: false,
+  guiSocketPending: false,
+  cache: [],
+  setup: ()=>{
+    if (gui.fullyDisconnected()) {
+      gui.guiSocketPending = true
+      spawnRenderProcess().then((guiSocket)=>{
+        gui.guiSocketConnected = true
+        gui.guiSocketPending = false
+        gui.guiSocket = guiSocket
+      })
+    }
+  },
+  connected: () => gui.guiSocketConnected,
+  fullyDisconnected: () => {
+    return !gui.guiSocketConnected &&
+           !gui.guiSocketPending
+  },
+  pending: () => gui.guiSocketPending,
+  send: (data) => {
+    if (gui.connected()) {
+      gui.cache.push(data)
+      for (var i=0; i++; i<gui.cache.length) {
+        let stepImg = gui.cache.shift()
+        gui.guiSocket.send(stepImg)
+      }
+    } else if (gui.pending()) {
+      gui.cache.push(data)
+    }
+  }
 }
 
 var state = {
   env: undefined,
-  guiSocket: undefined,
+  gui: gui,
   make: (envName) => {
-    this.env = ENVS[envName]()
+    state.env = ENVS[envName]()
     return {
-      action_space: this.env.action_space,
-      observation_space: this.env.observation_space
+      action_space: state.env.action_space,
+      observation_space: state.env.observation_space
     }
   },
   reset: (_) => {
-    return this.env.reset()
+    return state.env.reset()
   },
   step: (actions) => {
-    return this.env.step(actions)
+    return state.env.step(actions)
   },
   render: (_) => {
-    var data = this.env._getImage()
-    if (!this.guiSocket) {
-      spawnRenderProcess().then((guiSocket)=>{
-        this.guiSocket = guiSocket
-        this.guiSocket.send(data)
-      })
-    } else {
-      this.guiSocket.send(data)
-    }
-
+    var data = state.env._getImage()
+    state.gui.setup()
+    state.gui.send(data)
+    return {'outcome': 'success'}
   }
 }
 

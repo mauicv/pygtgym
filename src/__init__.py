@@ -42,3 +42,6 @@ class Env:
 
     def close(self):
         self.ps.terminate()
+
+    def __del__(self):
+        self.close()

@@ -12,7 +12,7 @@ function _buildSocketConnect(ws) {
 
 function spawnRenderProcess(){
   return new Promise(function(resolve, reject) {
-    const port = 4445;
+    const port = 4444;
     const server = http.createServer();
     const wss = new WebSocket.Server({ server });
 
@@ -22,15 +22,13 @@ function spawnRenderProcess(){
     });
 
     server.listen(port);
-    const guips = fork(
+
+    fork(
       `${__dirname}/../node_modules/.bin/electron`,
-      [`${__dirname}/main.js`]);
+      [`${__dirname}/main.js`]
+    );
   })
 }
 
-
-// spawnRenderProcess().then((guiSocket)=>{
-//   guiSocket.send('hello')
-// })
 
 module.exports = { spawnRenderProcess }
