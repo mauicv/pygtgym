@@ -39,7 +39,7 @@ def test_step():
 def test_run():
     env = make('gt-stander')
     env.reset()
-    for i in range(1000):
+    for i in range(1001):
         _, _, d, _ = env.step(list(range(6)))
     assert d
 

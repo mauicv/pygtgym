@@ -8,8 +8,8 @@ from src import make # noqa
 def test_gui():
     env = make('gt-stander')
     env.reset()
-    for i in range(1000):
-        _, _, d, _ = env.step(list(range(6)))
+    for i in range(1001):
+        _, _, d, _ = env.step([0.1, 0, 0, 0, 0, 0])
         env.render()
     env.close()
     assert d

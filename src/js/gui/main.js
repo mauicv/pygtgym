@@ -15,6 +15,9 @@ function createWindow () {
 }
 
 function connectSocket(win){
+  // try {
+  //  TODO: try until connect then return ...
+  // }
   var socket = new WebSocket('ws://localhost:4444')
   socket.on('message', (msg)=>{
     win.webContents.send('msg', msg)
