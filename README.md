@@ -17,9 +17,6 @@ ___
 To do so by hand use:
 
 ```sh
-python3 -m venv venv
-pip install -upgrade pip
-pip install -r requirements.txt
 cd src/js
 npm install
 ```
@@ -34,8 +31,6 @@ ___
 
 
 ## tests
-
-With virtual environment active.
 
 ```sh
 python tests/setup.py
