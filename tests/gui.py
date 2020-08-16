@@ -1,6 +1,5 @@
 import os
 import sys
-from tqdm import tqdm
 sys.path.insert(1, os.getcwd())
 from src import make # noqa
 
@@ -16,5 +15,5 @@ def test_gui():
 
 
 if __name__ == '__main__':
-    for func in tqdm([test_gui]):
+    for func in [test_gui]:
         func()

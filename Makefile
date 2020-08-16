@@ -14,9 +14,6 @@ help:
 
 setup:
 	@( \
-		python3 -m venv venv; \
-		pip install --upgrade pip; \
-		pip install -r requirements.txt; \
 		cd src/js; \
 		npm install; \
 	)
@@ -24,7 +21,6 @@ setup:
 
 test:
 	@( \
-		. venv/bin/activate; \
-		python tests/setup.py; \
-		python tests/gui.py; \
+		python3 tests/setup.py; \
+		python3 tests/gui.py; \
 	)

@@ -1,6 +1,5 @@
 import os
 import sys
-from tqdm import tqdm
 sys.path.insert(1, os.getcwd())
 from src import make # noqa
 
@@ -45,5 +44,5 @@ def test_run():
 
 
 if __name__ == '__main__':
-    for func in tqdm([test_make, test_reset, test_step, test_run]):
+    for func in [test_make, test_reset, test_step, test_run]:
         func()
